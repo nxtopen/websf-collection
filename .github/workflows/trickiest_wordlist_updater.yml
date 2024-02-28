@@ -20,6 +20,11 @@ jobs:
           rsync -av --exclude='parameters.txt' temp_folder/inventory/ subdomains/
           rm -r temp_folder
 
+      - name: Configure Git
+        run: |
+          git config --global user.email "bot@nxtopen.org"
+          git config --global user.name "NxtOpen Bot"
+
       - name: Commit files if changed
         run: |
           git add -N .
@@ -29,8 +34,6 @@ jobs:
           else
               echo "[+] Files were changed! Pushing changed..."
               git add -A
-              git config --global user.email "bot@nxtopen.org"
-              git config --global user.name "NxtOpen Bot"
               git commit -m "[Github Action] Automated trickest wordlists update."
-              git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/$GITHUB_REPOSITORY main
+              git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/nxtopen/websf-collection.git main
           fi
