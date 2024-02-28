@@ -20,12 +20,12 @@ jobs:
       - name: Concatenate .txt files
         run: |
           set -e
-          find temp_folder/subdomains -type f -name '*.txt' ! -name 'parameters.txt' -exec cat {} + > temp_folder/subdomains.txt
+          find ./temp_folder/subdomains -type f -name '*.txt' ! -name 'parameters.txt' -exec cat {} + > ./temp_folder/subdomains.txt
 
       - name: Move subdomains.txt to root folder
         run: |
           set -e
-          mv temp_folder/subdomains.txt subdomains.txt
+          mv ./temp_folder/subdomains.txt subdomains.txt
 
       - name: Remove temp folder
         run: |
