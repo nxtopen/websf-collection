@@ -1,8 +1,9 @@
 name: Wordlist Updater - Trickest wordlists updater
 
 on:
+  workflow_dispatch:
   schedule:
-    - cron: '0 * * * *'  # Runs every hour at the beginning of the hour
+    - cron: '0 * * * *'
 
 jobs:
   update-files:
@@ -16,17 +17,25 @@ jobs:
           set -e
           git clone --depth=1 https://github.com/trickest/wordlists.git temp_folder
 
-      - name: Copy files to subdomains folder
+      - name: Concatenate .txt files
         run: |
           set -e
-          mkdir -p subdomains
-          rsync -av --exclude='parameters.txt' temp_folder/inventory/ subdomains/
-          rm -r temp_folder
-          
+          find temp_folder/subdomains -type f -name '*.txt' ! -name 'parameters.txt' -exec cat {} + > temp_folder/subdomains.txt
+
+      - name: Move subdomains.txt to root folder
+        run: |
+          set -e
+          mv temp_folder/subdomains.txt subdomains.txt
+
+      - name: Remove temp folder
+        run: |
+          set -e
+          rm -rf temp_folder
+
       - name: Push to repo
         run: |
           git config --global user.name 'NxtBot'
           git config --global user.email 'info@nxtopen.org'
           git add .
-          git commit -am "Updated Automatically"
+          git commit -am "Updated subdomains.txt"
           git push
