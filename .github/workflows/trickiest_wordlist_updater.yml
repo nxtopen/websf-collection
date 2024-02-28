@@ -25,5 +25,6 @@ jobs:
         run: |
           git config --global user.name 'NxtBot'
           git config --global user.email 'info@nxtopen.org'
+          git add .
           git commit -am "Updated Automatically"
           git push
