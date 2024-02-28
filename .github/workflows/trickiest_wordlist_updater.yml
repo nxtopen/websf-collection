@@ -1,6 +1,8 @@
 name: Wordlist Updater - Trickest wordlists updater
 
-on: workflow_dispatch
+on:
+  schedule:
+    - cron: '0 * * * *'  # Runs every hour at the beginning of the hour
 
 jobs:
   update-files:
