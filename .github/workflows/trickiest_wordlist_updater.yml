@@ -22,22 +22,20 @@ jobs:
           set -e
           mkdir -p subdomains
           rsync -av --exclude='parameters.txt' temp_folder/inventory/ subdomains/
-
-      - name: Configure Git
-        run: |
-          git config --global user.email "your-email@example.com"
-          git config --global user.name "Your Name"
+          rm -r temp_folder
 
       - name: Commit files if changed
         run: |
-          set -e
           git add -N .
 
           if [ -z "$(git ls-files --modified)" ]; then
               echo "[+] No files were changed"
           else
-              echo "[+] Files were changed! Pushing changes..."
+              echo "[+] Files were changed! Pushing changed..."
               git add -A
-              git commit -m "[Github Action] Update wordlists from Trickest repository"
-              git push origin main
+              git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
+              git config --local user.email "bot@nxtopen.org"
+              git config --local user.name "NxtOpen Bot"
+              git commit -m "[Github Action] Automated trickest wordlists update."
+              git push
           fi
