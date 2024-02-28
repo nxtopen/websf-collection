@@ -1,8 +1,10 @@
 name: Wordlist Updater - Trickest wordlists updater
 
-on:
-  schedule:
-    - cron: 0 0 * * *
+# on:
+#   schedule:
+#     - cron: 0 0 * * *
+
+on: workflow_dispatch
 
 jobs:
   update-files:
