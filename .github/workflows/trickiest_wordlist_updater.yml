@@ -1,9 +1,5 @@
 name: Wordlist Updater - Trickest wordlists updater
 
-# on:
-#   schedule:
-#     - cron: 0 0 * * *
-
 on: workflow_dispatch
 
 jobs:
@@ -33,9 +29,8 @@ jobs:
           else
               echo "[+] Files were changed! Pushing changed..."
               git add -A
-              git remote set-url origin https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/$GITHUB_REPOSITORY
-              git config --local user.email "bot@nxtopen.org"
-              git config --local user.name "NxtOpen Bot"
+              git config --global user.email "bot@nxtopen.org"
+              git config --global user.name "NxtOpen Bot"
               git commit -m "[Github Action] Automated trickest wordlists update."
-              git push
+              git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/$GITHUB_REPOSITORY main
           fi
