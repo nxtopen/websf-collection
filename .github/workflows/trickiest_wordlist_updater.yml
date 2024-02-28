@@ -33,7 +33,7 @@ jobs:
           else
               echo "[+] Files were changed! Pushing changed..."
               git add -A
-              git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
+              git remote set-url origin https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/$GITHUB_REPOSITORY
               git config --local user.email "bot@nxtopen.org"
               git config --local user.name "NxtOpen Bot"
               git commit -m "[Github Action] Automated trickest wordlists update."
