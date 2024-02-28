@@ -7,7 +7,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
+        with:
+          token: ${{ secrets.GH_TOKEN }}
       - name: Clone Trickest wordlists repository
         run: |
           set -e
@@ -19,21 +20,10 @@ jobs:
           mkdir -p subdomains
           rsync -av --exclude='parameters.txt' temp_folder/inventory/ subdomains/
           rm -r temp_folder
-
-      - name: Configure Git
+          
+      - name: Push to repo
         run: |
-          git config --global user.email "bot@nxtopen.org"
-          git config --global user.name "NxtOpen Bot"
-
-      - name: Commit files if changed
-        run: |
-          git add -N .
-
-          if [ -z "$(git ls-files --modified)" ]; then
-              echo "[+] No files were changed"
-          else
-              echo "[+] Files were changed! Pushing changed..."
-              git add -A
-              git commit -m "[Github Action] Automated trickest wordlists update."
-              git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/nxtopen/websf-collection.git main
-          fi
+          git config --global user.name 'NxtBot'
+          git config --global user.email 'info@nxtopen.org'
+          git commit -am "Updated Automatically"
+          git push
